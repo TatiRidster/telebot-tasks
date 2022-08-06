@@ -12,7 +12,6 @@ def tasks_bot(token):
 
     def start(update, context):
         arg = context.args
-        print(arg)
         keyboard = ReplyKeyboardMarkup([], resize_keyboard=True)
         item_1 = KeyboardButton('Посмотреть')
         item_2 = KeyboardButton('Добавить')
@@ -24,16 +23,19 @@ def tasks_bot(token):
         else:
             context.bot.send_message(update.effective_chat.id, f"{' '.join(arg)}")
 
-    def show(update, context):
-        context.bot.send_message(update.effective_chat.id, f'{get_tasks}')
 
     def info(update, context):
-        context.bot.send_message(update.effective_chat.id, "Меня создала компания GB!")
+        context.bot.send_message(update.effective_chat.id, "Меня создала Группа 3")
 
     def message(update, context):
         text = update.message.text
         if text.lower() == 'привет':
             context.bot.send_message(update.effective_chat.id, 'И тебе привет..')
+        elif text.lower() == 'посмотреть':
+            context.bot.send_message(update.effective_chat.id, f'{get_tasks}')
+        elif text.lower() == 'добавить':
+            context.bot.send_message(update.effective_chat.id, f'{get_tasks}')
+            # TODO: conversation handler
         else:
             context.bot.send_message(update.effective_chat.id, 'я тебя не понимаю')
 
@@ -41,13 +43,11 @@ def tasks_bot(token):
         context.bot.send_message(update.effective_chat.id, f'Шо сказал, не пойму')
 
     start_handler = CommandHandler('start', start)
-    show_handler = CommandHandler('show', show)
     info_handler = CommandHandler('info', info)
     message_handler = MessageHandler(Filters.text, message)
     unknown_handler = MessageHandler(Filters.command, unknown)  # /game
 
     dispatcher.add_handler(start_handler)
-    dispatcher.add_handler(show_handler)
     dispatcher.add_handler(info_handler)
     dispatcher.add_handler(unknown_handler)
     dispatcher.add_handler(message_handler)
