@@ -12,7 +12,6 @@ def tasks_bot(token):
 
     def start(update, context):
         arg = context.args
-        print(arg)
         keyboard = ReplyKeyboardMarkup([], resize_keyboard=True)
         item_1 = KeyboardButton('Посмотреть')
         item_2 = KeyboardButton('Добавить')
@@ -24,9 +23,6 @@ def tasks_bot(token):
         else:
             context.bot.send_message(update.effective_chat.id, f"{' '.join(arg)}")
 
-    def show(update, context):
-        context.bot.send_message(update.effective_chat.id, f'{get_tasks}')
-
     def info(update, context):
         context.bot.send_message(update.effective_chat.id, "Меня создала компания GB!")
 
@@ -34,6 +30,13 @@ def tasks_bot(token):
         text = update.message.text
         if text.lower() == 'привет':
             context.bot.send_message(update.effective_chat.id, 'И тебе привет..')
+        elif text.lower()== 'посмотреть':
+            context.bot.send_message(update.effective_chat.id, f'{get_tasks}')
+        elif text.lower()== 'добавить':
+            context.bot.send_message(update.effective_chat.id, 'Введите задачу:')
+            arg=context.args
+            new_tasks= add_task(all_task,arg=arg) 
+            context.bot.send_message(update.effective_chat.id, f'{new_tasks}')   
         else:
             context.bot.send_message(update.effective_chat.id, 'я тебя не понимаю')
 
@@ -57,7 +60,7 @@ def tasks_bot(token):
 
 
 def main():
-    tasks_bot(os.getenv('TOKEN'))
+    tasks_bot(Token)
 
 
 if __name__ == "__main__":

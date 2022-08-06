@@ -2,17 +2,6 @@ import csv
 import os
 
 
-def clear_terminal(function):  # Декоратор. Очистка окна терминала в зависимости от типа ОС
-    def inner(*args, **kwargs):
-        os.system('cls' if os.name == 'nt' else 'clear')
-        function(*args, **kwargs)
-        print('Для возврата в меню нажмите ENTER...')
-        input()
-        os.system('cls' if os.name == 'nt' else 'clear')
-
-    return inner
-
-
 def read_file(filename: str) -> dict:
     """
     Выгружает в память словарь с данными из CSV файла.
@@ -34,27 +23,23 @@ def read_file(filename: str) -> dict:
     return result
 
 
-all_task = read_file('todo.csv')
+all_task = read_file('DZ_telebot\\telebot-tasks\\todo.csv')
 
 
-@clear_terminal
-def add_task(todo: dict):
-    while True:  # Проверка ввода
-        todo_new = input("Введите новую задачу: ")
-        if todo_new:
-            id_new = max(list(x for x in todo.keys())) + 1
-            result_new = {
-                'task': todo_new,
-                'is_done': 0
-            }
-            todo[id_new] = result_new
-            break
-        else:
-            print('Название не может быть пустым')
-    print("\033[35m {} \033[0m".format(f"Ваша задача < {todo_new} > добавлена."))
+def add_task(todo: dict, arg: str):
+    todo_new = arg
+    if todo_new:
+        id_new = max(list(x for x in todo.keys())) + 1
+        result_new = {
+            'task': todo_new,
+            'is_done': 0
+        }
+        todo[id_new] = result_new
+        return f"Ваша задача < {todo_new} > добавлена."
+    else:
+        return 'Название не может быть пустым'
 
 
-@clear_terminal
 def edit_task(todo: dict):
     print('Список дел:')
     for key, value in todo.items():
@@ -89,7 +74,6 @@ def edit_task(todo: dict):
     print(f'Операция завершена.')
 
 
-@clear_terminal
 def del_task(todo: dict):
     print('Список дел:')
     for key, value in todo.items():
@@ -108,7 +92,6 @@ def del_task(todo: dict):
     print(f'Задача {del_id} удалена')
 
 
-@clear_terminal
 def save_data(todo: dict):
     with open('todo.csv', 'w', encoding='utf-8', newline='') as file:
         todo_save = csv.writer(file, delimiter=',')
@@ -118,8 +101,6 @@ def save_data(todo: dict):
     print('Данные успешно сохранены!')
 
 
-
-# @clear_terminal
 def print_todo(to_do: dict, done: int) -> None:
     """
     Вывод в консоль списка дел на основе переданного значения 'done'.
@@ -128,23 +109,23 @@ def print_todo(to_do: dict, done: int) -> None:
     :param done: параметр match для печати соответствующих данных.
     :return: None.
     """
+    tmp_list = []
     match done:
         case 1:
             tmp_list = []
             print('Список дел:')
+
             for key, value in to_do.items():
                 # Вывод ID и названия дела
                 tmp_list.append(f'ID {key} >>> {value["task"]} >>> {"Выполнено" if value["is_done"] else "Не выполнено"}')
             return '\n'.join(tmp_list)
         case 2:
-            print('Уже сделано:')
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and v:
                         # Вывод названия выполненных дел
                         print("\033[36m {} \033[0m".format(value['task']))
         case 3:
-            print('Надо сделать:')
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and not v:
