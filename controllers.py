@@ -25,22 +25,21 @@ def read_file(filename: str) -> dict:
 all_task = read_file('todo.csv')
 
 
-def add_task(todo: dict):
-    while True:  # Проверка ввода
-        todo_new = input("Введите новую задачу: ")
-        if todo_new:
-            id_new = max(list(x for x in todo.keys())) + 1
-            result_new = {
-                'task': todo_new,
-                'is_done': 0
-            }
-            todo[id_new] = result_new
-            break
-        else:
-            print('Название не может быть пустым')
-    print("\033[35m {} \033[0m".format(f"Ваша задача < {todo_new} > добавлена."))
+def add_task(todo: dict, arg: str):
+    todo_new = arg
+    if todo_new:
+        id_new = max(list(x for x in todo.keys())) + 1
+        result_new = {
+            'task': todo_new,
+            'is_done': 0
+        }
+        todo[id_new] = result_new
+        return f"Ваша задача < {todo_new} > добавлена."
+    else:
+        return 'Название не может быть пустым'
 
 
+@clear_terminal
 def edit_task(todo: dict):
     print('Список дел:')
     for key, value in todo.items():
@@ -75,6 +74,7 @@ def edit_task(todo: dict):
     print(f'Операция завершена.')
 
 
+@clear_terminal
 def del_task(todo: dict):
     print('Список дел:')
     for key, value in todo.items():
@@ -93,6 +93,7 @@ def del_task(todo: dict):
     print(f'Задача {del_id} удалена')
 
 
+@clear_terminal
 def save_data(todo: dict):
     with open('todo.csv', 'w', encoding='utf-8', newline='') as file:
         todo_save = csv.writer(file, delimiter=',')
@@ -111,6 +112,7 @@ def print_todo(to_do: dict, done: int) -> None:
     :param done: параметр match для печати соответствующих данных.
     :return: None.
     """
+    tmp_list = []
     match done:
         case 1:
             tmp_list = []
