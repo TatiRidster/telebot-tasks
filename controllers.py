@@ -39,7 +39,6 @@ def add_task(todo: dict, arg: str):
         return 'Название не может быть пустым'
 
 
-@clear_terminal
 def edit_task(todo: dict):
     print('Список дел:')
     for key, value in todo.items():
@@ -74,7 +73,6 @@ def edit_task(todo: dict):
     print(f'Операция завершена.')
 
 
-@clear_terminal
 def del_task(todo: dict):
     print('Список дел:')
     for key, value in todo.items():
@@ -93,7 +91,6 @@ def del_task(todo: dict):
     print(f'Задача {del_id} удалена')
 
 
-@clear_terminal
 def save_data(todo: dict):
     with open('todo.csv', 'w', encoding='utf-8', newline='') as file:
         todo_save = csv.writer(file, delimiter=',')
@@ -115,7 +112,6 @@ def print_todo(to_do: dict, done: int) -> None:
     tmp_list = []
     match done:
         case 1:
-            tmp_list = []
             for key, value in to_do.items():
                 # Вывод ID и названия дела
                 tmp_list.append(f'ID {key} >>> {value["task"]} >>> {"Выполнено" if value["is_done"] else "Не выполнено"}')

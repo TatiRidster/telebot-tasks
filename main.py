@@ -37,9 +37,9 @@ def tasks_bot(token):
             context.bot.send_message(update.effective_chat.id, f'{get_tasks}')
         elif text.lower()== 'добавить':
             context.bot.send_message(update.effective_chat.id, 'Введите задачу:')
-            arg=context.args
-            new_tasks= add_task(all_task,arg=arg)
-            context.bot.send_message(update.effective_chat.id, f'{new_tasks}')
+            # arg=context.args
+            # new_tasks= add_task(all_task,arg=arg)
+            # context.bot.send_message(update.effective_chat.id, f'{new_tasks}')
         else:
             context.bot.send_message(update.effective_chat.id, 'я тебя не понимаю')
 
