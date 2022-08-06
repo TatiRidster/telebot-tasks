@@ -1,5 +1,3 @@
-from ast import arg
-from tok import Token
 from telegram import Update, Bot, ReplyKeyboardMarkup, KeyboardButton
 from telegram.ext import Updater, CommandHandler, Filters, MessageHandler
 import os
@@ -25,7 +23,6 @@ def tasks_bot(token):
         else:
             context.bot.send_message(update.effective_chat.id, f"{' '.join(arg)}")
 
-
     def info(update, context):
         context.bot.send_message(update.effective_chat.id, "Меня создала компания GB!")
 
@@ -47,11 +44,13 @@ def tasks_bot(token):
         context.bot.send_message(update.effective_chat.id, f'Шо сказал, не пойму')
 
     start_handler = CommandHandler('start', start)
+    show_handler = CommandHandler('show', show)
     info_handler = CommandHandler('info', info)
     message_handler = MessageHandler(Filters.text, message)
     unknown_handler = MessageHandler(Filters.command, unknown)  # /game
 
     dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(show_handler)
     dispatcher.add_handler(info_handler)
     dispatcher.add_handler(unknown_handler)
     dispatcher.add_handler(message_handler)

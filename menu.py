@@ -42,4 +42,3 @@ def menu() -> None:
             case 0:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 sys.exit()
-
