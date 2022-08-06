@@ -1,5 +1,5 @@
 from telegram import Update, Bot, ReplyKeyboardMarkup, KeyboardButton
-from telegram.ext import Updater, CommandHandler, Filters, MessageHandler
+from telegram.ext import Updater, CommandHandler, Filters, MessageHandler, ConversationHandler
 import os
 from controllers import *
 
@@ -23,11 +23,21 @@ def tasks_bot(token):
         else:
             context.bot.send_message(update.effective_chat.id, f"{' '.join(arg)}")
 
-    def show(update, context):
-        context.bot.send_message(update.effective_chat.id, f'{get_tasks}')
+
+    def task_id(update, context):
+        pass
+
+
+    def task_name(update, context):
+        pass
+
+
+    def task_status(update, context):
+        pass
+
 
     def info(update, context):
-        context.bot.send_message(update.effective_chat.id, "Меня создала Группа 3")
+        context.bot.send_message(update.effective_chat.id, "Меня создала Группа 3 потока февраль'22")
 
     def message(update, context):
         text = update.message.text
@@ -43,8 +53,24 @@ def tasks_bot(token):
         else:
             context.bot.send_message(update.effective_chat.id, 'я тебя не понимаю')
 
+
+    def stop(update, context):
+        context.message.send_message(update.effective_chat.id, "Хорошего дня!")
+        return ConversationHandler.END
+
+
     def unknown(update, context):
         context.bot.send_message(update.effective_chat.id, f'Шо сказал, не пойму')
+
+    conv_handler = ConversationHandler(
+        entry_points = [CommandHandler('start', start)],
+        states={
+            1: [MessageHandler(Filters.text, task_id(), pass_user_data=True)],
+            2: [MessageHandler(Filters.text, task_name(), pass_user_data=True)],
+            3: [MessageHandler(Filters.text, task_status(), pass_user_data=True)]
+        },
+        fallbacks=[CommandHandler('stop', stop)]
+    )
 
     start_handler = CommandHandler('start', start)
     info_handler = CommandHandler('info', info)
