@@ -1,11 +1,16 @@
-import telebot
+from telegram import Update, Bot
+from telegram.ext import Updater, CommandHandler, Filters, MessageHandler
 import os
 
 
 def tasks_bot(token):
-    bot = telebot.TeleBot(token)
+    bot = Bot(token)
+    updater = Updater(token)
+    dispatcher = updater.dispatcher
+    print('server started')
 
-    bot.polling()
+    updater.start_polling()
+    updater.idle()
 
 
 def main():
