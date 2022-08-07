@@ -7,8 +7,14 @@ from controllers import *
 task_id, task_name, task_status = range(3)
 
 keyboard = ReplyKeyboardMarkup([
-            [KeyboardButton('Посмотреть все'), KeyboardButton('Посмотреть готовые'), KeyboardButton('Посмотреть в работе')],
-            [KeyboardButton('Добавить'), KeyboardButton('Изменить'), KeyboardButton('Удалить')],
+            [KeyboardButton('Посмотреть все'),
+             KeyboardButton('Посмотреть готовые'),
+             KeyboardButton('Посмотреть в работе')],
+
+            [KeyboardButton('Добавить'),
+             KeyboardButton('Изменить'),
+             KeyboardButton('Удалить')],
+
             [KeyboardButton('Сохранить изменения')]
         ], resize_keyboard=True)
 
