@@ -6,6 +6,11 @@ from controllers import *
 
 task_id, task_name, task_status = range(3)
 
+keyboard = ReplyKeyboardMarkup([
+            [KeyboardButton('Посмотреть все'), KeyboardButton('Посмотреть готовые'), KeyboardButton('Посмотреть в работе')],
+            [KeyboardButton('Добавить'), KeyboardButton('Изменить'), KeyboardButton('Удалить')],
+            [KeyboardButton('Сохранить изменения')]
+        ], resize_keyboard=True)
 
 def tasks_bot(token):
     bot = Bot(token)
@@ -15,11 +20,7 @@ def tasks_bot(token):
 
     def start(update, context):
         arg = context.args
-        keyboard = ReplyKeyboardMarkup([
-            [KeyboardButton('Посмотреть все'), KeyboardButton('Посмотреть готовые'), KeyboardButton('Посмотреть в работе')],
-            [KeyboardButton('Добавить'), KeyboardButton('Изменить'), KeyboardButton('Удалить')],
-            [KeyboardButton('Сохранить изменения')]
-        ], resize_keyboard=True)
+
 
         # keyboard.keyboard.append([item_1,item_2,item_3,item_4])
         if not arg:
@@ -46,6 +47,7 @@ def tasks_bot(token):
             # arg=context.args
             # new_tasks= add_task(all_task,arg=arg)
             # context.bot.send_message(update.effective_chat.id, f'{new_tasks}')
+
         else:
             context.bot.send_message(update.effective_chat.id, 'я тебя не понимаю')
         return update.message.text
