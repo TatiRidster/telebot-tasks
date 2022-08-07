@@ -113,21 +113,22 @@ def print_todo(to_do: dict, done: int) -> None:
     match done:
         case 1:
             for key, value in to_do.items():
-                # Вывод ID и названия дела
                 tmp_list.append(f'ID {key} >>> {value["task"]} >>> {"Выполнено" if value["is_done"] else "Не выполнено"}')
             return '\n'.join(tmp_list)
         case 2:
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and v:
-                        # Вывод названия выполненных дел
-                        print("\033[36m {} \033[0m".format(value['task']))
+                        tmp_list.append(value['task'])
+            return '\n'.join(tmp_list)
         case 3:
             for value in to_do.values():
                 for k, v in value.items():
                     if k == 'is_done' and not v:
-                        # Вывод невыполненных дел
-                        print("\033[31m {} \033[0m".format(value['task']))
+                        tmp_list.append(value['task'])
+            return '\n'.join(tmp_list)
 
 
-get_tasks = print_todo(all_task, 1)
+get_tasks_1 = print_todo(all_task, 1)
+get_tasks_2 = print_todo(all_task, 2)
+get_tasks_3 = print_todo(all_task, 3)

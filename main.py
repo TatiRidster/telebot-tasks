@@ -4,6 +4,9 @@ import os
 from controllers import *
 
 
+task_id, task_name, task_status = range(3)
+
+
 def tasks_bot(token):
     bot = Bot(token)
     updater = Updater(token)
@@ -12,28 +15,17 @@ def tasks_bot(token):
 
     def start(update, context):
         arg = context.args
-        keyboard = ReplyKeyboardMarkup([], resize_keyboard=True)
-        item_1 = KeyboardButton('Посмотреть')
-        item_2 = KeyboardButton('Добавить')
-        item_3 = KeyboardButton('Изменить')
-        item_4 = KeyboardButton('Удалить')
-        keyboard.keyboard.append([item_1,item_2,item_3,item_4])
+        keyboard = ReplyKeyboardMarkup([
+            [KeyboardButton('Посмотреть все'), KeyboardButton('Посмотреть готовые'), KeyboardButton('Посмотреть в работе')],
+            [KeyboardButton('Добавить'), KeyboardButton('Изменить'), KeyboardButton('Удалить')],
+            [KeyboardButton('Сохранить изменения')]
+        ], resize_keyboard=True)
+
+        # keyboard.keyboard.append([item_1,item_2,item_3,item_4])
         if not arg:
             context.bot.send_message(update.effective_chat.id, "Привет", reply_markup=keyboard)
         else:
             context.bot.send_message(update.effective_chat.id, f"{' '.join(arg)}")
-
-
-    def task_id(update, context):
-        pass
-
-
-    def task_name(update, context):
-        pass
-
-
-    def task_status(update, context):
-        pass
 
 
     def info(update, context):
@@ -43,8 +35,12 @@ def tasks_bot(token):
         text = update.message.text
         if text.lower() == 'привет':
             context.bot.send_message(update.effective_chat.id, 'И тебе привет..')
-        elif text.lower()== 'посмотреть':
-            context.bot.send_message(update.effective_chat.id, f'{get_tasks}')
+        elif text.lower()== 'посмотреть все':
+            context.bot.send_message(update.effective_chat.id, f'{get_tasks_1}')
+        elif text.lower() == 'посмотреть готовые':
+            context.bot.send_message(update.effective_chat.id, f'{get_tasks_2}_2')
+        elif text.lower() == 'посмотреть в работе':
+            context.bot.send_message(update.effective_chat.id, f'{get_tasks_3}_3')
         elif text.lower()== 'добавить':
             context.bot.send_message(update.effective_chat.id, 'Введите задачу:')
             # arg=context.args
@@ -52,6 +48,7 @@ def tasks_bot(token):
             # context.bot.send_message(update.effective_chat.id, f'{new_tasks}')
         else:
             context.bot.send_message(update.effective_chat.id, 'я тебя не понимаю')
+        return update.message.text
 
 
     def stop(update, context):
@@ -62,23 +59,28 @@ def tasks_bot(token):
     def unknown(update, context):
         context.bot.send_message(update.effective_chat.id, f'Шо сказал, не пойму')
 
+
     conv_handler = ConversationHandler(
-        entry_points = [CommandHandler('start', start)],
+        entry_points=[CommandHandler('start', start)],
         states={
-            1: [MessageHandler(Filters.text, task_id(), pass_user_data=True)],
-            2: [MessageHandler(Filters.text, task_name(), pass_user_data=True)],
-            3: [MessageHandler(Filters.text, task_status(), pass_user_data=True)]
+            task_id: [],
+            task_name: [],
+            task_status: []
         },
         fallbacks=[CommandHandler('stop', stop)]
     )
 
+
     start_handler = CommandHandler('start', start)
     info_handler = CommandHandler('info', info)
+    stop_handler = CommandHandler('stop', stop)
     message_handler = MessageHandler(Filters.text, message)
     unknown_handler = MessageHandler(Filters.command, unknown)  # /game
 
+    dispatcher.add_handler(conv_handler)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(info_handler)
+    dispatcher.add_handler(stop_handler)
     dispatcher.add_handler(unknown_handler)
     dispatcher.add_handler(message_handler)
 
@@ -88,6 +90,7 @@ def tasks_bot(token):
 
 def main():
     tasks_bot(os.getenv('TOKEN'))
+    print('Бот остановлен!')
 
 
 if __name__ == "__main__":
