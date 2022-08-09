@@ -3,7 +3,9 @@ from telegram.ext import Updater, CommandHandler, Filters, MessageHandler, Conve
 import os
 from controllers import *
 
-task_id, task_name, task_status = range(3)
+ID = 'id'
+TASK = 'task'
+IS_DONE = 'is_done'
 
 keyboard = ReplyKeyboardMarkup([
     [KeyboardButton('Посмотреть все'),
@@ -15,7 +17,7 @@ keyboard = ReplyKeyboardMarkup([
      KeyboardButton('Удалить')],
 
     [KeyboardButton('Сохранить изменения')]
-    ], resize_keyboard=True)
+], resize_keyboard=True)
 
 
 def tasks_bot(token):
@@ -26,8 +28,6 @@ def tasks_bot(token):
 
     def start(update, context):
         arg = context.args
-
-        # keyboard.keyboard.append([item_1,item_2,item_3,item_4])
         if not arg:
             context.bot.send_message(update.effective_chat.id, "Привет", reply_markup=keyboard)
         else:
@@ -36,45 +36,67 @@ def tasks_bot(token):
     def info(update, context):
         context.bot.send_message(update.effective_chat.id, "Меня создала Группа 3 потока февраль'22")
 
+    def enter_task(update, _):
+        update.message.reply_text(add_task(all_task, update.message.text))
+        # todo_new = update.message.text
+        # if todo_new:
+        #     id_new = max(list(x for x in all_task.keys())) + 1
+        #     result_new = {
+        #         'task': todo_new,
+        #         'is_done': 0
+        #     }
+        #     all_task[id_new] = result_new
+        #     update.message.reply_text(f"Задача '{todo_new}' добавлена.")
+        # else:
+        #     update.message.reply_text('Название не может быть пустым')
+        return ConversationHandler.END
+
     def message(update, context):
         text = update.message.text
         if text.lower() == 'привет':
             context.bot.send_message(update.effective_chat.id, 'И тебе привет..')
         elif text.lower() == 'посмотреть все':
-            context.bot.send_message(update.effective_chat.id, f'{get_tasks_1}')
+            context.bot.send_message(update.effective_chat.id, f'{print_todo(all_task, 1)}')
         elif text.lower() == 'посмотреть готовые':
-            context.bot.send_message(update.effective_chat.id, f'{get_tasks_2}')
+            context.bot.send_message(update.effective_chat.id, f'{print_todo(all_task, 2)}')
         elif text.lower() == 'посмотреть в работе':
-            context.bot.send_message(update.effective_chat.id, f'{get_tasks_3}')
+            context.bot.send_message(update.effective_chat.id, f'{print_todo(all_task, 3)}')
         elif text.lower() == 'добавить':
             context.bot.send_message(update.effective_chat.id, 'Введите задачу:')
-            arg = context.args
-            new_tasks = add_task(all_task, arg=arg)
-            context.bot.send_message(update.effective_chat.id, f'{new_tasks}')
+            return TASK
         else:
             context.bot.send_message(update.effective_chat.id, 'я тебя не понимаю')
         return update.message.text
 
+    def add(update, _):
+        update.message.reply_text('Введите дело, которое вы хотите добавить или /cancel, чтобы не добавлять')
+        return TASK
+
+    def cancel(update, _):
+        update.message.reply_text('Хорошо, не добавляем')
+        return ConversationHandler.END
+
     def stop(update, context):
         context.message.send_message(update.effective_chat.id, "Хорошего дня!")
-        return ConversationHandler.END
 
     def unknown(update, context):
         context.bot.send_message(update.effective_chat.id, f'Шо сказал, не пойму')
 
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start)],
+        entry_points=[MessageHandler(Filters.regex('^(добавить|Добавить)$'), add)],
         states={
-            task_id: [],
-            task_name: [],
-            task_status: []
+            # ID:
+            TASK: [MessageHandler(Filters.text, enter_task)]
+            # IS_DONE:
         },
-        fallbacks=[CommandHandler('stop', stop)]
+        fallbacks=[CommandHandler('cancel', cancel)]
     )
-
     start_handler = CommandHandler('start', start)
     info_handler = CommandHandler('info', info)
     stop_handler = CommandHandler('stop', stop)
+    new_rask_handler = CommandHandler('add', add)
+    enter_task_handler = CommandHandler('enter_task', enter_task)
+    cancel_handler = CommandHandler('cancel', cancel)
     message_handler = MessageHandler(Filters.text, message)
     unknown_handler = MessageHandler(Filters.command, unknown)  # /game
 
@@ -82,8 +104,11 @@ def tasks_bot(token):
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(info_handler)
     dispatcher.add_handler(stop_handler)
-    dispatcher.add_handler(unknown_handler)
+    dispatcher.add_handler(new_rask_handler)
+    dispatcher.add_handler(enter_task_handler)
+    dispatcher.add_handler(cancel_handler)
     dispatcher.add_handler(message_handler)
+    dispatcher.add_handler(unknown_handler)
 
     updater.start_polling()
     updater.idle()

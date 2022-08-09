@@ -27,16 +27,16 @@ all_task = read_file('todo.csv')
 
 def add_task(todo: dict, arg: str):
     todo_new = arg
-    if todo_new:
-        id_new = max(list(x for x in todo.keys())) + 1
-        result_new = {
-            'task': todo_new,
-            'is_done': 0
-        }
-        todo[id_new] = result_new
-        return f"Ваша задача < {todo_new} > добавлена."
-    else:
-        return 'Название не может быть пустым'
+    # if todo_new:
+    id_new = max(list(x for x in todo.keys())) + 1
+    result_new = {
+        'task': todo_new,
+        'is_done': 0
+    }
+    todo[id_new] = result_new
+    return f"Ваша задача < {todo_new} > добавлена."
+    # else:
+    #     return 'Название не может быть пустым'
 
 
 def edit_task(todo: dict):
@@ -127,8 +127,3 @@ def print_todo(to_do: dict, done: int) -> None:
                     if k == 'is_done' and not v:
                         tmp_list.append(value['task'])
             return '\n'.join(tmp_list)
-
-
-get_tasks_1 = print_todo(all_task, 1)
-get_tasks_2 = print_todo(all_task, 2)
-get_tasks_3 = print_todo(all_task, 3)
