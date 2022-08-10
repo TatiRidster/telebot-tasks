@@ -97,7 +97,7 @@ def save_data(todo: dict):
         for k, v in todo.items():
             new_line = [k, v['task'], v['is_done']]
             todo_save.writerow(new_line)
-    print('Данные успешно сохранены!')
+    return 'Данные успешно сохранены!'
 
 
 

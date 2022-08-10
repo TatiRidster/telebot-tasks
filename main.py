@@ -36,8 +36,10 @@ def tasks_bot(token):
     def info(update, context):
         context.bot.send_message(update.effective_chat.id, "Меня создала Группа 3 потока февраль'22")
 
-    def enter_task(update, _):
+    def enter_task(update, context):
         update.message.reply_text(add_task(all_task, update.message.text))
+        context.bot.send_sticker(update.effective_chat.id,
+                                 'CAACAgIAAxkBAAEFhIFi80Anl4Ls15nv7g5HF7m-AkZVpQACfRMAAqN3qEvCWDsDiG_N4CkE')
         # todo_new = update.message.text
         # if todo_new:
         #     id_new = max(list(x for x in all_task.keys())) + 1
@@ -64,8 +66,15 @@ def tasks_bot(token):
         elif text.lower() == 'добавить':
             context.bot.send_message(update.effective_chat.id, 'Введите задачу:')
             return TASK
+        elif text.lower() == 'сохранить изменения':
+            context.bot.send_message(update.effective_chat.id, f'{save_data(all_task)}')
         else:
-            context.bot.send_message(update.effective_chat.id, 'я тебя не понимаю')
+            context.bot.send_message(update.effective_chat.id, f'я тебя не понимаю')
+            context.bot.send_sticker(update.effective_chat.id,
+                                     'CAACAgIAAxkBAAEFhIdi80CHP1R-bh96JlfoSeNBmq1lqQACIhMAAl1scEuuLYe9O-OAPikE')
+            # gif = open('src/bender_unknown.gif', 'rb')
+            # context.bot.send_video(update.effective_chat.id, video=gif)
+            # gif.close()
         return update.message.text
 
     def add(update, _):
