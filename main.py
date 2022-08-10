@@ -40,19 +40,34 @@ def tasks_bot(token):
         update.message.reply_text(add_task(all_task, update.message.text))
         context.bot.send_sticker(update.effective_chat.id,
                                  'CAACAgIAAxkBAAEFhIFi80Anl4Ls15nv7g5HF7m-AkZVpQACfRMAAqN3qEvCWDsDiG_N4CkE')
-        # todo_new = update.message.text
-        # if todo_new:
-        #     id_new = max(list(x for x in all_task.keys())) + 1
-        #     result_new = {
-        #         'task': todo_new,
-        #         'is_done': 0
-        #     }
-        #     all_task[id_new] = result_new
-        #     update.message.reply_text(f"Задача '{todo_new}' добавлена.")
-        # else:
-        #     update.message.reply_text('Название не может быть пустым')
+        
         return ConversationHandler.END
+    def edit_id(update, _):
+        update.message.reply_text('Введите ID задачи, которую вы хотите изменить:')
+        return ID
+    
+    
+    def eenter_task(update, _):
+        global temp_id
+        temp_id = int(update.message.text)
+        update.message.reply_text('Введите изменения в задачу:')
+        return TASK
 
+    def edit_t(update, _):
+        global temp_task
+        temp_task = update.message.text
+        update.message.reply_text('Введите статус задачи: 1 - выполнено, 0 - не выполнено')
+        return IS_DONE
+
+    def edit_f(update, _):
+        temp_flag = update.message.text
+        for k, v in all_task.items():
+            if temp_id == k:
+                v['task'] = temp_task
+                v['is_done'] = temp_flag
+        print(temp_task,temp_flag)
+        update.message.reply_text('Задача изменена')
+        return ConversationHandler.END
     def message(update, context):
         text = update.message.text
         if text.lower() == 'привет':
@@ -66,6 +81,8 @@ def tasks_bot(token):
         elif text.lower() == 'добавить':
             context.bot.send_message(update.effective_chat.id, 'Введите задачу:')
             return TASK
+        elif text.lower() == 'изменить': 
+            context.bot.send_message(update.effective_chat.id, f'{print_todo(all_task, 1)}')
         elif text.lower() == 'сохранить изменения':
             context.bot.send_message(update.effective_chat.id, f'{save_data(all_task)}')
         elif text.lower() == 'удалить':
@@ -123,6 +140,15 @@ def tasks_bot(token):
         },
         fallbacks=[CommandHandler('cancel', cancel)]
     )
+    conv_handler3 = ConversationHandler(
+        entry_points=[MessageHandler(Filters.regex('^(изменить|Изменить)$'), edit_id)],
+        states={
+            ID: [MessageHandler(Filters.text, eenter_task)],
+            TASK: [MessageHandler(Filters.text, edit_t)],
+            IS_DONE: [MessageHandler(Filters.text, edit_f)]
+        },
+        fallbacks=[CommandHandler('cancel', cancel)]
+    )
     start_handler = CommandHandler('start', start)
     info_handler = CommandHandler('info', info)
     stop_handler = CommandHandler('stop', stop)
@@ -131,6 +157,11 @@ def tasks_bot(token):
     cancel_handler = CommandHandler('cancel', cancel)
     delete_task_handler = CommandHandler('delete', delete)
     delete_task_id_handler = CommandHandler('delete_task', delete_task)
+    edit_id_handler = CommandHandler('edit_id', edit_id)
+    eenter_task_handler = CommandHandler('eenter_task', eenter_task)
+    edit_f_handler = CommandHandler('edit_f', edit_f)
+    edit_t_handler = CommandHandler('edit_t', edit_t)
+
     message_handler = MessageHandler(Filters.text, message)
     unknown_handler = MessageHandler(Filters.command, unknown)  # /game
 
@@ -141,9 +172,14 @@ def tasks_bot(token):
     dispatcher.add_handler(new_rask_handler)
     dispatcher.add_handler(enter_task_handler)
     dispatcher.add_handler(conv_handler2)
+    dispatcher.add_handler(conv_handler3)
     dispatcher.add_handler(cancel_handler)
     dispatcher.add_handler(delete_task_handler)
     dispatcher.add_handler(delete_task_id_handler)
+    dispatcher.add_handler(edit_id_handler)
+    dispatcher.add_handler(eenter_task_handler)
+    dispatcher.add_handler(edit_f_handler)
+    dispatcher.add_handler(edit_t_handler)
     dispatcher.add_handler(message_handler)
     dispatcher.add_handler(unknown_handler)
 
