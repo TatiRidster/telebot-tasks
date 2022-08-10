@@ -25,9 +25,8 @@ def read_file(filename: str) -> dict:
 all_task = read_file('todo.csv')
 
 
-def add_task(todo: dict, arg: str):
+def add_task(todo: dict, arg: str) -> str:
     todo_new = arg
-    # if todo_new:
     id_new = max(list(x for x in todo.keys())) + 1
     result_new = {
         'task': todo_new,
@@ -35,8 +34,6 @@ def add_task(todo: dict, arg: str):
     }
     todo[id_new] = result_new
     return f"Ваша задача < {todo_new} > добавлена."
-    # else:
-    #     return 'Название не может быть пустым'
 
 
 def edit_task(todo: dict):
@@ -73,27 +70,20 @@ def edit_task(todo: dict):
     print(f'Операция завершена.')
 
 
-def del_task(todo: dict, ID: str):
-    del_id = ID
-    # print('Список дел:')
-    # for key, value in todo.items():
-    #     # Вывод ID, названия дела
-    #     print("\033[7m {} \033[0m".format(f'ID {key} >>> {value["task"]}'))
-    while True:  # Проверка ввода
-        try:
-            del_id = abs(int(ID))
-        except ValueError:
-            return f"Wrong input"
-        if del_id in todo.keys():
-            del todo[del_id]
-            break
-        else:
-            return f'ID {del_id} не найден'
-    return f"Ваша задача < {del_id} > удалена."
-    
+def del_task(todo: dict, ID: str) -> str:
+    try:
+        del_id = abs(int(ID))
+    except ValueError:
+        return f"Wrong input"
+    if del_id in todo.keys():
+        del todo[del_id]
+        return f"Ваша задача < {del_id} > удалена."
+    else:
+        return f'ID {del_id} не найден'
 
 
-def save_data(todo: dict):
+
+def save_data(todo: dict) -> str:
     with open('todo.csv', 'w', encoding='utf-8', newline='') as file:
         todo_save = csv.writer(file, delimiter=',')
         for k, v in todo.items():
@@ -103,7 +93,7 @@ def save_data(todo: dict):
 
 
 
-def print_todo(to_do: dict, done: int) -> None:
+def print_todo(to_do: dict, done: int) -> str:
     """
     Вывод в консоль списка дел на основе переданного значения 'done'.
 
@@ -112,20 +102,19 @@ def print_todo(to_do: dict, done: int) -> None:
     :return: None.
     """
     tmp_list = []
-    match done:
-        case 1:
-            for key, value in to_do.items():
-                tmp_list.append(f'ID {key} >>> {value["task"]} >>> {"Выполнено" if value["is_done"] else "Не выполнено"}')
-            return '\n'.join(tmp_list)
-        case 2:
-            for value in to_do.values():
-                for k, v in value.items():
-                    if k == 'is_done' and v:
-                        tmp_list.append(value['task'])
-            return '\n'.join(tmp_list)
-        case 3:
-            for value in to_do.values():
-                for k, v in value.items():
-                    if k == 'is_done' and not v:
-                        tmp_list.append(value['task'])
-            return '\n'.join(tmp_list)
+    if done == 1:
+        for key, value in to_do.items():
+            tmp_list.append(f'ID {key} >>> {value["task"]} >>> {"Выполнено" if value["is_done"] else "Не выполнено"}')
+        return '\n'.join(tmp_list)
+    elif done == 2:
+        for value in to_do.values():
+            for k, v in value.items():
+                if k == 'is_done' and v:
+                    tmp_list.append(value['task'])
+        return '\n'.join(tmp_list)
+    elif done == 3:
+        for value in to_do.values():
+            for k, v in value.items():
+                if k == 'is_done' and not v:
+                    tmp_list.append(value['task'])
+        return '\n'.join(tmp_list)
