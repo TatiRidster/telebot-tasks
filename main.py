@@ -68,6 +68,11 @@ def tasks_bot(token):
             return TASK
         elif text.lower() == 'сохранить изменения':
             context.bot.send_message(update.effective_chat.id, f'{save_data(all_task)}')
+        elif text.lower() == 'удалить':
+            context.bot.send_message(update.effective_chat.id, f'{print_todo(all_task, 1)}')
+            context.bot.send_message(update.effective_chat.id, 'Введите ID задачи для удаления:')
+            #context.bot.send_message(update.effective_chat.id, f'{del_task(all_task, ID)}')
+            return ID
         else:
             context.bot.send_message(update.effective_chat.id, f'я тебя не понимаю')
             context.bot.send_sticker(update.effective_chat.id,
@@ -80,7 +85,16 @@ def tasks_bot(token):
     def add(update, _):
         update.message.reply_text('Введите дело, которое вы хотите добавить или /cancel, чтобы не добавлять')
         return TASK
-
+    def delete(update, _):
+        update.message.reply_text('Введите ID задачи, которую вы хотите удалить:')
+        return ID
+    def delete_task(update, context):
+        #update.message.reply_text('Введите ID задачи, которую вы хотите удалить, или /cancel, чтобы не удалять')
+        update.message.reply_text(del_task(all_task, update.message.text))
+        context.bot.send_sticker(update.effective_chat.id,
+                                 'CAACAgIAAxkBAAEFhIFi80Anl4Ls15nv7g5HF7m-AkZVpQACfRMAAqN3qEvCWDsDiG_N4CkE')
+        return ConversationHandler.END
+            
     def cancel(update, _):
         update.message.reply_text('Хорошо, не добавляем')
         return ConversationHandler.END
@@ -100,12 +114,23 @@ def tasks_bot(token):
         },
         fallbacks=[CommandHandler('cancel', cancel)]
     )
+    conv_handler2 = ConversationHandler(
+        entry_points=[MessageHandler(Filters.regex('^(удалить|Удалить)$'), delete)],
+        states={
+            ID: [MessageHandler(Filters.text, delete_task)]
+            #TASK: 
+            # IS_DONE:
+        },
+        fallbacks=[CommandHandler('cancel', cancel)]
+    )
     start_handler = CommandHandler('start', start)
     info_handler = CommandHandler('info', info)
     stop_handler = CommandHandler('stop', stop)
     new_rask_handler = CommandHandler('add', add)
     enter_task_handler = CommandHandler('enter_task', enter_task)
     cancel_handler = CommandHandler('cancel', cancel)
+    delete_task_handler = CommandHandler('delete', delete)
+    delete_task_id_handler = CommandHandler('delete_task', delete_task)
     message_handler = MessageHandler(Filters.text, message)
     unknown_handler = MessageHandler(Filters.command, unknown)  # /game
 
@@ -115,7 +140,10 @@ def tasks_bot(token):
     dispatcher.add_handler(stop_handler)
     dispatcher.add_handler(new_rask_handler)
     dispatcher.add_handler(enter_task_handler)
+    dispatcher.add_handler(conv_handler2)
     dispatcher.add_handler(cancel_handler)
+    dispatcher.add_handler(delete_task_handler)
+    dispatcher.add_handler(delete_task_id_handler)
     dispatcher.add_handler(message_handler)
     dispatcher.add_handler(unknown_handler)
 
