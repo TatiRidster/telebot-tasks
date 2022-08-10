@@ -73,22 +73,24 @@ def edit_task(todo: dict):
     print(f'Операция завершена.')
 
 
-def del_task(todo: dict):
-    print('Список дел:')
-    for key, value in todo.items():
-        # Вывод ID, названия дела
-        print("\033[7m {} \033[0m".format(f'ID {key} >>> {value["task"]}'))
+def del_task(todo: dict, ID: str):
+    del_id = ID
+    # print('Список дел:')
+    # for key, value in todo.items():
+    #     # Вывод ID, названия дела
+    #     print("\033[7m {} \033[0m".format(f'ID {key} >>> {value["task"]}'))
     while True:  # Проверка ввода
         try:
-            del_id = abs(int(input('Введите id задачи для удаления: ')))
+            del_id = abs(int(ID))
         except ValueError:
-            print('Wrong input')
+            return f"Wrong input"
         if del_id in todo.keys():
             del todo[del_id]
             break
         else:
-            print(f'ID {del_id} не найден')
-    print(f'Задача {del_id} удалена')
+            return f'ID {del_id} не найден'
+    return f"Ваша задача < {del_id} > удалена."
+    
 
 
 def save_data(todo: dict):
