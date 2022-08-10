@@ -40,8 +40,8 @@ def tasks_bot(token):
         update.message.reply_text(add_task(all_task, update.message.text))
         context.bot.send_sticker(update.effective_chat.id,
                                  'CAACAgIAAxkBAAEFhIFi80Anl4Ls15nv7g5HF7m-AkZVpQACfRMAAqN3qEvCWDsDiG_N4CkE')
-        
         return ConversationHandler.END
+
     def edit_id(update, _):
         update.message.reply_text('Введите ID задачи, которую вы хотите изменить:')
         return ID
@@ -85,33 +85,32 @@ def tasks_bot(token):
             context.bot.send_message(update.effective_chat.id, f'{print_todo(all_task, 1)}')
         elif text.lower() == 'сохранить изменения':
             context.bot.send_message(update.effective_chat.id, f'{save_data(all_task)}')
+            context.bot.send_sticker(update.effective_chat.id,
+                                     'CAACAgIAAxkBAAEFhYdi88Hlg7HNkhZrCUxW_p3Eg1ONBQACgRUAAuvgUUgNpYhAo6mJJykE')
         elif text.lower() == 'удалить':
             context.bot.send_message(update.effective_chat.id, f'{print_todo(all_task, 1)}')
             context.bot.send_message(update.effective_chat.id, 'Введите ID задачи для удаления:')
-            #context.bot.send_message(update.effective_chat.id, f'{del_task(all_task, ID)}')
             return ID
         else:
             context.bot.send_message(update.effective_chat.id, f'я тебя не понимаю')
             context.bot.send_sticker(update.effective_chat.id,
                                      'CAACAgIAAxkBAAEFhIdi80CHP1R-bh96JlfoSeNBmq1lqQACIhMAAl1scEuuLYe9O-OAPikE')
-            # gif = open('src/bender_unknown.gif', 'rb')
-            # context.bot.send_video(update.effective_chat.id, video=gif)
-            # gif.close()
         return update.message.text
 
     def add(update, _):
-        update.message.reply_text('Введите дело, которое вы хотите добавить или /cancel, чтобы не добавлять')
+        update.message.reply_text('Введите дело, которое вы хотите добавить')
         return TASK
+
     def delete(update, _):
         update.message.reply_text('Введите ID задачи, которую вы хотите удалить:')
         return ID
+
     def delete_task(update, context):
-        #update.message.reply_text('Введите ID задачи, которую вы хотите удалить, или /cancel, чтобы не удалять')
         update.message.reply_text(del_task(all_task, update.message.text))
         context.bot.send_sticker(update.effective_chat.id,
-                                 'CAACAgIAAxkBAAEFhIFi80Anl4Ls15nv7g5HF7m-AkZVpQACfRMAAqN3qEvCWDsDiG_N4CkE')
+                                 'CAACAgIAAxkBAAEFhX1i88Af-40yVf9rWSrtJt40epxGRgACjwMAAkcVaAlna9Kp-go6HCkE')
         return ConversationHandler.END
-            
+
     def cancel(update, _):
         update.message.reply_text('Хорошо, не добавляем')
         return ConversationHandler.END
@@ -125,9 +124,7 @@ def tasks_bot(token):
     conv_handler = ConversationHandler(
         entry_points=[MessageHandler(Filters.regex('^(добавить|Добавить)$'), add)],
         states={
-            # ID:
             TASK: [MessageHandler(Filters.text, enter_task)]
-            # IS_DONE:
         },
         fallbacks=[CommandHandler('cancel', cancel)]
     )
@@ -135,8 +132,6 @@ def tasks_bot(token):
         entry_points=[MessageHandler(Filters.regex('^(удалить|Удалить)$'), delete)],
         states={
             ID: [MessageHandler(Filters.text, delete_task)]
-            #TASK: 
-            # IS_DONE:
         },
         fallbacks=[CommandHandler('cancel', cancel)]
     )
