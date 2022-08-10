@@ -1,0 +1,88 @@
+<mxfile host="65bd71144e">
+    <diagram id="WL09k0ZGKMIc5R2ekCyM" name="Страница 1">
+        <mxGraphModel dx="804" dy="180" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="2" target="24" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Старт" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="369" y="21" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="edgeStyle=none;html=1;" parent="1" source="3" target="5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="" style="edgeStyle=none;html=1;" parent="1" source="3" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="edgeStyle=none;html=1;" parent="1" source="3" target="10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="edgeStyle=none;html=1;" parent="1" source="3" target="12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="" style="edgeStyle=none;html=1;" parent="1" source="3" target="14" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="" style="edgeStyle=none;html=1;" parent="1" source="3" target="16" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="" style="edgeStyle=none;html=1;" parent="1" source="3" target="18" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="26" target="22" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Выполнение&lt;br&gt;(controllers.py)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="369" y="352" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="1 - Показать все задачи&lt;br&gt;&lt;div style=&quot;background-color: rgb(30 , 30 , 30) ; font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; line-height: 18px&quot;&gt;&lt;span style=&quot;color: rgb(212 , 212 , 212)&quot;&gt;&lt;span style=&quot;color: rgb(220 , 220 , 170)&quot;&gt;print_todo&lt;/span&gt;(&lt;span style=&quot;color: rgb(156 , 220 , 254)&quot;&gt;all_task&lt;/span&gt;,&amp;nbsp;&lt;/span&gt;&lt;font color=&quot;#b5cea8&quot;&gt;1&lt;/font&gt;&lt;font color=&quot;#d4d4d4&quot;&gt;)&lt;/font&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="99" y="282" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="2 - Показать выполненные&amp;nbsp;&lt;br&gt;&lt;div style=&quot;color: rgb(212 , 212 , 212) ; background-color: rgb(30 , 30 , 30) ; font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; line-height: 18px&quot;&gt;&lt;span style=&quot;color: #dcdcaa&quot;&gt;print_todo&lt;/span&gt;(&lt;span style=&quot;color: #9cdcfe&quot;&gt;all_task&lt;/span&gt;, &lt;span style=&quot;color: #b5cea8&quot;&gt;2&lt;/span&gt;)&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="99" y="362" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="3 - Показать не выполненные&amp;nbsp;&lt;br&gt;&lt;span style=&quot;font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; color: rgb(220 , 220 , 170)&quot;&gt;print_todo&lt;/span&gt;&lt;span style=&quot;color: rgb(212 , 212 , 212) ; font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; background-color: rgb(30 , 30 , 30)&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; color: rgb(156 , 220 , 254)&quot;&gt;all_task&lt;/span&gt;&lt;span style=&quot;color: rgb(212 , 212 , 212) ; font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; background-color: rgb(30 , 30 , 30)&quot;&gt;,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; background-color: rgb(42 , 42 , 42)&quot;&gt;&lt;font color=&quot;#b5cea8&quot;&gt;3&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(212 , 212 , 212) ; font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; background-color: rgb(30 , 30 , 30)&quot;&gt;)&lt;/span&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="99" y="443.5" width="200" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="4 - Добавить задачу&lt;br&gt;&lt;div style=&quot;color: rgb(212 , 212 , 212) ; background-color: rgb(30 , 30 , 30) ; font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; line-height: 18px&quot;&gt;&lt;span style=&quot;color: #dcdcaa&quot;&gt;add_task&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="169" y="559.5" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="5 - Изменить задачу (для бота в основном main)&lt;br&gt;&lt;div style=&quot;color: rgb(212 , 212 , 212) ; background-color: rgb(30 , 30 , 30) ; font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; line-height: 18px&quot;&gt;&lt;span style=&quot;color: #dcdcaa&quot;&gt;edit_task&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="319" y="559.5" width="121" height="80.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="6 - Удалить задачу&lt;br&gt;&lt;div style=&quot;color: rgb(212 , 212 , 212) ; background-color: rgb(30 , 30 , 30) ; font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; line-height: 18px&quot;&gt;&lt;span style=&quot;color: #dcdcaa&quot;&gt;del_task&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="469" y="559.5" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="9 - Сохранить изменения&lt;br&gt;&lt;div style=&quot;color: rgb(212 , 212 , 212) ; background-color: rgb(30 , 30 , 30) ; font-family: &amp;#34;menlo&amp;#34; , &amp;#34;monaco&amp;#34; , &amp;#34;courier new&amp;#34; , monospace ; line-height: 18px&quot;&gt;&lt;span style=&quot;color: #dcdcaa&quot;&gt;save_data&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="589" y="489.5" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="0 - Выход" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+                    <mxGeometry x="569" y="242" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="24" target="26" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="Запуск главного файла&lt;br&gt;(main.py)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="354" y="140" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="Загрузка меню&lt;br&gt;(menu.py)" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="369" y="242" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="419" y="302" as="sourcePoint"/>
+                        <mxPoint x="419" y="350" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="29" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="447" y="352" as="sourcePoint"/>
+                        <mxPoint x="447" y="302" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
